@@ -1,15 +1,10 @@
 services:
-  mysql:
-    image: mysql:8.0
+  db:
+    image: mariadb:latest
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: clinic_db
-      MYSQL_USER: clinic_user
-      MYSQL_PASSWORD: clinic_password
+      MYSQL_ROOT_PASSWORD: Admin123
+      MYSQL_DATABASE: CareConnect
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
-
-volumes:
-  mysql_data:
+      - ./data:/var/lib/mysql
