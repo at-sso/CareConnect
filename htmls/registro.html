@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro - CareConnect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 min-h-screen flex items-center justify-center font-sans">
+
+  <div class="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-3xl">
+    <!-- Encabezado -->
+    <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center">
+        <img src="https://i.ibb.co/JF7RCJkX/logo-sin-nombre.png" alt="Logo" class="h-14 w-14 mr-3">
+        <h1 class="text-2xl font-bold text-blue-900">Registro</h1>
+      </div>
+      <h2 class="text-xl font-semibold text-gray-700">Tu salud es nuestra prioridad</h2>
+    </div>
+
+    <!-- Formulario -->
+    <form id="registroPaso1">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="col-span-1 md:col-span-1">
+          <label class="block text-sm font-medium text-gray-700">Nombres</label>
+          <input name="nombres" type="text" class="w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Juan Carlos" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Apellidos</label>
+          <input name="apellidos" type="text" class="w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Pérez" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Fecha de Nacimiento</label>
+          <input name="fecha" type="date" class="w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Cédula / ID</label>
+          <input name="cedula" type="text" class="w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="123456789" required>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 mb-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Email</label>
+          <input name="email" type="email" class="w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="correo@ejemplo.com" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Contraseña</label>
+          <input name="password" type="password" class="w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="••••••••" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Confirmar Contraseña</label>
+          <input name="confirmPassword" type="password" class="w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <!-- Botón -->
+      <div class="text-right">
+        <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-xl transition">
+          Siguiente
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Script de redirección -->
+  <script>
+    document.getElementById("registroPaso1").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevenir envío
+
+      const form = event.target;
+      const password = form.password.value;
+      const confirmPassword = form.confirmPassword.value;
+
+      if (password !== confirmPassword) {
+        alert("Las contraseñas no coinciden.");
+        return;
+      }
+
+      if (form.checkValidity()) {
+        window.location.href = "registro-paso-2.html";
+      } else {
+        form.reportValidity(); // Muestra errores
+      }
+    });
+  </script>
+
+</body>
+</html>
