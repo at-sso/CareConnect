@@ -12,7 +12,7 @@ NOTE: Docker might not work yet. Instead, run the npm commands.
    You need to apply the SQL schema from `db/init.sql` to your database. This can be done using a MySQL client or by running:
 
    ```bash
-   docker exec -i care-connect_db_1 mysql -uroot -pAdminroot123 < db/init.sql
+   Get-Content db/init.sql | docker exec -i care_connect_db mariadb -uroot -pAdminroot123
    ```
 
 3. **Install dependencies**:
