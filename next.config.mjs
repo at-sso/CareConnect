@@ -6,7 +6,7 @@ const nextConfig = {
       allowedOrigins: ["localhost:3000"],
     },
   },
-  // 'at-sso' NOTE: im not fixing shit
+  // NOTE: im not fixing shit
   eslint: {
     ignoreDuringBuilds: true, // Temporarily ignore ESLint errors during build
   },

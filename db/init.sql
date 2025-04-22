@@ -15,6 +15,32 @@ CREATE TABLE IF NOT EXISTS users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+-- Create documents table
+CREATE TABLE IF NOT EXISTS documents (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  file_name VARCHAR(255) NOT NULL,
+  file_path VARCHAR(255) NOT NULL,
+  file_type VARCHAR(50) NOT NULL,
+  file_size INT NOT NULL,
+  mime_type VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+-- Create appointments table
+CREATE TABLE IF NOT EXISTS appointments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  specialty VARCHAR(100) NOT NULL,
+  date DATE NOT NULL,
+  time VARCHAR(20) NOT NULL,
+  doctor VARCHAR(100),
+  reason TEXT NOT NULL,
+  status ENUM('pending', 'confirmed', 'cancelled') DEFAULT 'pending',
+  tracking_number VARCHAR(20) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 -- Insert a test user
 INSERT INTO users (
     cedula,
