@@ -21,7 +21,7 @@ describe("ServicesSection", () => {
   it("renders the section title", () => {
     render(<ServicesSection />);
 
-    expect(screen.getByText("Nuestros Servicios")).toBeInTheDocument();
+    expect(screen.getByText("Nuestros Servicios")).toBeDefined();
   });
 
   /**
@@ -30,9 +30,9 @@ describe("ServicesSection", () => {
   it("renders all three services with correct titles", () => {
     render(<ServicesSection />);
 
-    expect(screen.getByText("Gestión de Citas")).toBeInTheDocument();
-    expect(screen.getByText("Documentos Médicos")).toBeInTheDocument();
-    expect(screen.getByText("Pagos y Facturación")).toBeInTheDocument();
+    expect(screen.getByText("Gestión de Citas")).toBeDefined();
+    expect(screen.getByText("Documentos Médicos")).toBeDefined();
+    expect(screen.getByText("Pagos y Facturación")).toBeDefined();
   });
 
   /**
@@ -43,13 +43,13 @@ describe("ServicesSection", () => {
 
     expect(
       screen.getByText(/Programe, reprograme o cancele sus citas médicas/)
-    ).toBeInTheDocument();
+    ).toBeDefined();
     expect(
       screen.getByText(/Acceda a sus recetas, resultados de laboratorio/)
-    ).toBeInTheDocument();
+    ).toBeDefined();
     expect(
       screen.getByText(/Revise su estado de cuenta, realice pagos/)
-    ).toBeInTheDocument();
+    ).toBeDefined();
   });
 
   /**

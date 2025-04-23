@@ -9,7 +9,7 @@ import {
 export async function GET(request: Request) {
   try {
     // Verify authentication
-    const token = cookies().get("auth_token")?.value;
+    const token = (await cookies()).get("auth_token")?.value;
 
     if (!token) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
@@ -36,7 +36,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     // Verify authentication
-    const token = cookies().get("auth_token")?.value;
+    const token = (await cookies()).get("auth_token")?.value;
 
     if (!token) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });

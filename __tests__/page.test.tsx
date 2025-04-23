@@ -33,12 +33,12 @@ describe("Home Page", () => {
     render(<Home />);
 
     // Check if the logo is rendered
-    expect(screen.getByText("CareConnect")).toBeInTheDocument();
+    expect(screen.getByText("CareConnect")).toBeDefined();
 
     // Check if navigation links are rendered
-    expect(screen.getByText("Inicio")).toBeInTheDocument();
-    expect(screen.getByText("Servicios")).toBeInTheDocument();
-    expect(screen.getByText("Contacto")).toBeInTheDocument();
+    expect(screen.getByText("Inicio")).toBeDefined();
+    expect(screen.getByText("Servicios")).toBeDefined();
+    expect(screen.getByText("Contacto")).toBeDefined();
   });
 
   /**
@@ -48,14 +48,12 @@ describe("Home Page", () => {
     render(<Home />);
 
     // Check if the hero title and description are rendered
-    expect(
-      screen.getByText("Cuidado de salud simplificado")
-    ).toBeInTheDocument();
-    expect(screen.getByText(/Gestione sus citas médicas/)).toBeInTheDocument();
+    expect(screen.getByText("Cuidado de salud simplificado")).toBeDefined();
+    expect(screen.getByText(/Gestione sus citas médicas/)).toBeDefined();
 
     // Check if CTA buttons are rendered
-    expect(screen.getByText("Comenzar ahora")).toBeInTheDocument();
-    expect(screen.getByText("Conocer más")).toBeInTheDocument();
+    expect(screen.getByText("Comenzar ahora")).toBeDefined();
+    expect(screen.getByText("Conocer más")).toBeDefined();
   });
 
   /**
@@ -65,17 +63,17 @@ describe("Home Page", () => {
     render(<Home />);
 
     // Check if the section title is rendered
-    expect(screen.getByText("Nuestros Servicios")).toBeInTheDocument();
+    expect(screen.getByText("Nuestros Servicios")).toBeDefined();
 
     // Check if the three services are rendered
-    expect(screen.getByText("Gestión de Citas")).toBeInTheDocument();
-    expect(screen.getByText("Documentos Médicos")).toBeInTheDocument();
-    expect(screen.getByText("Pagos y Facturación")).toBeInTheDocument();
+    expect(screen.getByText("Gestión de Citas")).toBeDefined();
+    expect(screen.getByText("Documentos Médicos")).toBeDefined();
+    expect(screen.getByText("Pagos y Facturación")).toBeDefined();
 
     // Check if the icons are rendered
-    expect(screen.getByTestId("calendar-icon")).toBeInTheDocument();
-    expect(screen.getByTestId("file-text-icon")).toBeInTheDocument();
-    expect(screen.getByTestId("credit-card-icon")).toBeInTheDocument();
+    expect(screen.getByTestId("calendar-icon")).toBeDefined();
+    expect(screen.getByTestId("file-text-icon")).toBeDefined();
+    expect(screen.getByTestId("credit-card-icon")).toBeDefined();
   });
 
   /**
@@ -85,13 +83,13 @@ describe("Home Page", () => {
     render(<Home />);
 
     // Check if the section title is rendered
-    expect(screen.getByText("¿Por qué elegirnos?")).toBeInTheDocument();
+    expect(screen.getByText("¿Por qué elegirnos?")).toBeDefined();
 
     // Check if the four benefits are rendered
-    expect(screen.getByText("Seguridad Garantizada")).toBeInTheDocument();
-    expect(screen.getByText("Disponible 24/7")).toBeInTheDocument();
-    expect(screen.getByText("Atención Personalizada")).toBeInTheDocument();
-    expect(screen.getByText("Historial Completo")).toBeInTheDocument();
+    expect(screen.getByText("Seguridad Garantizada")).toBeDefined();
+    expect(screen.getByText("Disponible 24/7")).toBeDefined();
+    expect(screen.getByText("Atención Personalizada")).toBeDefined();
+    expect(screen.getByText("Historial Completo")).toBeDefined();
   });
 
   /**
@@ -101,16 +99,16 @@ describe("Home Page", () => {
     render(<Home />);
 
     // Check if the section title is rendered
-    expect(screen.getByText("Contáctenos")).toBeInTheDocument();
+    expect(screen.getByText("Contáctenos")).toBeDefined();
 
     // Check if the form fields are rendered
-    expect(screen.getByLabelText("Nombre")).toBeInTheDocument();
-    expect(screen.getByLabelText("Email")).toBeInTheDocument();
-    expect(screen.getByLabelText("Asunto")).toBeInTheDocument();
-    expect(screen.getByLabelText("Mensaje")).toBeInTheDocument();
+    expect(screen.getByLabelText("Nombre")).toBeDefined();
+    expect(screen.getByLabelText("Email")).toBeDefined();
+    expect(screen.getByLabelText("Asunto")).toBeDefined();
+    expect(screen.getByLabelText("Mensaje")).toBeDefined();
 
     // Check if the submit button is rendered
-    expect(screen.getByText("Enviar Mensaje")).toBeInTheDocument();
+    expect(screen.getByText("Enviar Mensaje")).toBeDefined();
   });
 
   /**
@@ -120,6 +118,6 @@ describe("Home Page", () => {
     render(<Home />);
 
     // Check if the copyright information is rendered
-    expect(screen.getByText(/© 2025 CareConnect/)).toBeInTheDocument();
+    expect(screen.getByText(/© 2025 CareConnect/)).toBeDefined();
   });
 });

@@ -12,7 +12,7 @@ export async function PUT(
 ) {
   try {
     // Verify authentication
-    const token = cookies().get("auth_token")?.value;
+    const token = (await cookies()).get("auth_token")?.value;
 
     if (!token) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });

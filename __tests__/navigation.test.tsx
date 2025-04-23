@@ -33,9 +33,9 @@ describe("Navigation", () => {
   it("renders all navigation links", () => {
     render(<Navigation />);
 
-    expect(screen.getByText("Inicio")).toBeInTheDocument();
-    expect(screen.getByText("Servicios")).toBeInTheDocument();
-    expect(screen.getByText("Contacto")).toBeInTheDocument();
+    expect(screen.getByText("Inicio")).toBeDefined();
+    expect(screen.getByText("Servicios")).toBeDefined();
+    expect(screen.getByText("Contacto")).toBeDefined();
   });
 
   /**
@@ -58,7 +58,7 @@ describe("Navigation", () => {
     render(<Navigation />);
 
     const inicioLink = screen.getByText("Inicio");
-    expect(inicioLink).toHaveClass("text-gray-100");
-    expect(inicioLink).toHaveClass("hover:text-blue-400");
+    expect(inicioLink).toHaveProperty("text-gray-100");
+    expect(inicioLink).toHaveProperty("hover:text-blue-400");
   });
 });

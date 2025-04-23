@@ -55,8 +55,8 @@ export async function query(
  * @returns {Promise<boolean>} True if connection successful, false otherwise
  */
 export async function testConnection(
-  retries = 5,
-  delay = 2000
+  retries: number = 5,
+  delay: number = 2000
 ): Promise<boolean> {
   let currentTry = 0;
 

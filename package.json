@@ -12,16 +12,19 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@angular/common": "19.2.7",
+    "@angular/core": "19.2.7",
     "@radix-ui/react-slot": "^1.2.0",
     "@radix-ui/react-toast": "^1.2.7",
+    "@testing-library/react": "16.3.0",
     "next": "15.3.0",
-    "next-themes": "^0.4.6",
-    "testing-library": "^0.0.2"
+    "next-themes": "^0.4.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^5.0.0",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^22.14.1",
     "@types/react": "^19.1.2",

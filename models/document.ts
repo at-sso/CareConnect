@@ -26,7 +26,7 @@ export interface Document {
  * Create the documents table if it doesn't exist
  * @returns {Promise<boolean>} True if successful, false otherwise
  */
-export async function createDocumentsTable() {
+export async function createDocumentsTable(): Promise<boolean> {
   try {
     await query(`
       CREATE TABLE IF NOT EXISTS documents (
