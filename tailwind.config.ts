@@ -1,6 +1,16 @@
+/**
+ * Tailwind CSS Configuration
+ *
+ * This file configures Tailwind CSS for the application.
+ * It includes settings for dark mode, content paths, theme customization, and plugins.
+ */
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  // Enable dark mode with class strategy
   darkMode: ["class"],
+
+  // Specify files to scan for class names
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -8,7 +18,10 @@ module.exports = {
     "./src/**/*.{ts,tsx}",
     "*.{js,ts,jsx,tsx,mdx}",
   ],
+
+  // Theme customization
   theme: {
+    // Container configuration
     container: {
       center: true,
       padding: "2rem",
@@ -16,7 +29,10 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+
+    // Theme extensions
     extend: {
+      // Custom color palette using CSS variables
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -52,11 +68,15 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+
+      // Custom border radius using CSS variables
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+
+      // Animation keyframes
       keyframes: {
         "accordion-down": {
           from: { height: 0 },
@@ -67,11 +87,15 @@ module.exports = {
           to: { height: 0 },
         },
       },
+
+      // Animation definitions
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
+
+  // Plugins
   plugins: [require("tailwindcss-animate")],
 };

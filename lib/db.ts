@@ -1,7 +1,15 @@
+/**
+ * Database Connection Module
+ *
+ * This module provides utilities for:
+ * 1. Connecting to the MariaDB/MySQL database
+ * 2. Executing SQL queries with parameterized statements
+ * 3. Testing database connection with retry logic
+ */
 import mysql from "mysql2/promise";
 import type { QueryResult } from "@/types";
 
-// Database connection configuration
+// Database connection configuration from environment variables
 const dbConfig = {
   host: process.env.DB_HOST || "localhost",
   port: Number(process.env.DB_PORT || "3306"),
@@ -16,15 +24,22 @@ const dbConfig = {
   keepAliveInitialDelay: 10000, // 10 seconds
 };
 
-// Create a connection pool
+// Create a connection pool for better performance
 const pool = mysql.createPool(dbConfig);
 
-// Helper function to execute SQL queries
+/**
+ * Execute a SQL query with optional parameters
+ * @param {string} sql - The SQL query to execute
+ * @param {unknown[]} params - The parameters to bind to the query
+ * @returns {Promise<QueryResult>} The query results
+ * @throws {Error} If the query fails
+ */
 export async function query(
   sql: string,
   params: unknown[] = []
 ): Promise<QueryResult> {
   try {
+    // Execute the query with parameters to prevent SQL injection
     const [results] = await pool.execute(sql, params);
     return results as QueryResult;
   } catch (error) {
@@ -33,7 +48,12 @@ export async function query(
   }
 }
 
-// Initialize database connection with retry logic
+/**
+ * Test database connection with retry logic
+ * @param {number} retries - Number of connection attempts
+ * @param {number} delay - Delay between retries in milliseconds
+ * @returns {Promise<boolean>} True if connection successful, false otherwise
+ */
 export async function testConnection(
   retries = 5,
   delay = 2000
@@ -42,6 +62,7 @@ export async function testConnection(
 
   while (currentTry < retries) {
     try {
+      // Attempt to get a connection from the pool
       const connection = await pool.getConnection();
       console.log("Database connection successful");
       connection.release();
@@ -60,6 +81,7 @@ export async function testConnection(
         return false;
       }
 
+      // Wait before retrying
       console.log(`Retrying in ${delay / 1000} seconds...`);
       await new Promise((resolve) => setTimeout(resolve, delay));
     }

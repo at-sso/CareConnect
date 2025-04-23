@@ -1,5 +1,16 @@
+/**
+ * Appointment Model
+ *
+ * This module provides:
+ * 1. Type definition for appointments
+ * 2. Database table creation
+ * 3. CRUD operations for appointments
+ */
 import { query } from "@/lib/db";
 
+/**
+ * Appointment interface defining the structure of appointment data
+ */
 export interface Appointment {
   id: number;
   user_id: number;
@@ -13,6 +24,10 @@ export interface Appointment {
   created_at: Date;
 }
 
+/**
+ * Create the appointments table if it doesn't exist
+ * @returns {Promise<boolean>} True if successful, false otherwise
+ */
 export async function createAppointmentsTable() {
   try {
     await query(`
@@ -38,6 +53,14 @@ export async function createAppointmentsTable() {
   }
 }
 
+/**
+ * Create a new appointment
+ * @param {number} userId - User ID
+ * @param {string} specialty - Medical specialty
+ * @param {string} date - Appointment date
+ * @param {string} reason - Reason for appointment
+ * @returns {Promise<number | null>} The new appointment ID or null if failed
+ */
 export async function createAppointment(
   userId: number,
   specialty: string,
@@ -88,6 +111,7 @@ export async function createAppointment(
         break;
     }
 
+    // Insert the appointment into the database
     const result = await query(
       `INSERT INTO appointments (user_id, specialty, date, time, doctor, reason, tracking_number)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
@@ -105,6 +129,11 @@ export async function createAppointment(
   }
 }
 
+/**
+ * Get all appointments for a user
+ * @param {number} userId - User ID
+ * @returns {Promise<Appointment[]>} Array of appointments
+ */
 export async function getAppointmentsByUserId(
   userId: number
 ): Promise<Appointment[]> {
@@ -125,6 +154,11 @@ export async function getAppointmentsByUserId(
   }
 }
 
+/**
+ * Get a specific appointment by ID
+ * @param {number} id - Appointment ID
+ * @returns {Promise<Appointment | null>} The appointment or null if not found
+ */
 export async function getAppointmentById(
   id: number
 ): Promise<Appointment | null> {
@@ -145,6 +179,12 @@ export async function getAppointmentById(
   }
 }
 
+/**
+ * Update the status of an appointment
+ * @param {number} id - Appointment ID
+ * @param {string} status - New status (pending, confirmed, cancelled)
+ * @returns {Promise<boolean>} True if successful, false otherwise
+ */
 export async function updateAppointmentStatus(
   id: number,
   status: "pending" | "confirmed" | "cancelled"

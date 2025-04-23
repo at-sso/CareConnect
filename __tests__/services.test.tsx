@@ -1,7 +1,13 @@
+/**
+ * Services Section Tests
+ *
+ * This file contains tests for the services section component.
+ * It tests the rendering of services, their titles, descriptions, and icons.
+ */
 import { render, screen } from "@testing-library/react";
 import ServicesSection from "@/components/services-section";
 
-// Mock the lucide-react icons
+// Mock the lucide-react icons to simplify testing
 jest.mock("lucide-react", () => ({
   Calendar: () => <div data-testid="calendar-icon" />,
   FileText: () => <div data-testid="file-text-icon" />,
@@ -9,12 +15,18 @@ jest.mock("lucide-react", () => ({
 }));
 
 describe("ServicesSection", () => {
+  /**
+   * Test that the section title renders correctly
+   */
   it("renders the section title", () => {
     render(<ServicesSection />);
 
     expect(screen.getByText("Nuestros Servicios")).toBeInTheDocument();
   });
 
+  /**
+   * Test that all three services render with correct titles
+   */
   it("renders all three services with correct titles", () => {
     render(<ServicesSection />);
 
@@ -23,6 +35,9 @@ describe("ServicesSection", () => {
     expect(screen.getByText("Pagos y Facturación")).toBeInTheDocument();
   });
 
+  /**
+   * Test that all service descriptions render correctly
+   */
   it("renders all service descriptions", () => {
     render(<ServicesSection />);
 
@@ -37,6 +52,9 @@ describe("ServicesSection", () => {
     ).toBeInTheDocument();
   });
 
+  /**
+   * Test that all service icons render correctly
+   */
   it("renders all service icons", () => {
     render(<ServicesSection />);
 
@@ -45,6 +63,9 @@ describe("ServicesSection", () => {
     expect(screen.getAllByTestId("credit-card-icon")).toHaveLength(1);
   });
 
+  /**
+   * Test that "Saber más" links render for each service
+   */
   it('renders "Saber más" links for each service', () => {
     render(<ServicesSection />);
 

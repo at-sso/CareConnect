@@ -1,17 +1,34 @@
+/**
+ * Next.js Configuration
+ *
+ * This file configures Next.js for the application.
+ * It includes settings for output, experimental features, and build-time checks.
+ */
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Use standalone output for better Docker compatibility
   output: "standalone",
+
+  // Experimental features
   experimental: {
     serverActions: {
+      // Allow server actions from specific origins
       allowedOrigins: ["localhost:3000"],
     },
   },
-  // NOTE: im not fixing shit
+
+  // Temporarily ignore ESLint errors during build
   eslint: {
-    ignoreDuringBuilds: true, // Temporarily ignore ESLint errors during build
+    ignoreDuringBuilds: true,
   },
+
+  // Temporarily ignore TypeScript errors during build
   typescript: {
-    ignoreBuildErrors: true, // Temporarily ignore TypeScript errors during build
+    ignoreBuildErrors: true,
+  },
+  images: {
+    unoptimized: true,
   },
 };
 

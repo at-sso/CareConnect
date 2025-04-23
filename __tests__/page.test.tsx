@@ -1,15 +1,21 @@
+/**
+ * Landing Page Tests
+ *
+ * This file contains tests for the landing page component.
+ * It tests the rendering of various sections and elements.
+ */
 import type React from "react";
 import { render, screen } from "@testing-library/react";
 import Home from "@/app/page";
 
-// Mock the next/link component
+// Mock the next/link component to avoid navigation in tests
 jest.mock("next/link", () => {
   return ({ children, href }: { children: React.ReactNode; href: string }) => {
     return <a href={href}>{children}</a>;
   };
 });
 
-// Mock the lucide-react icons
+// Mock the lucide-react icons to simplify testing
 jest.mock("lucide-react", () => ({
   Shield: () => <div data-testid="shield-icon" />,
   Clock: () => <div data-testid="clock-icon" />,
@@ -20,6 +26,9 @@ jest.mock("lucide-react", () => ({
 }));
 
 describe("Home Page", () => {
+  /**
+   * Test that the logo and navigation links render correctly
+   */
   it("renders the logo and navigation links", () => {
     render(<Home />);
 
@@ -32,6 +41,9 @@ describe("Home Page", () => {
     expect(screen.getByText("Contacto")).toBeInTheDocument();
   });
 
+  /**
+   * Test that the hero section renders with call-to-action buttons
+   */
   it("renders the hero section with call-to-action buttons", () => {
     render(<Home />);
 
@@ -46,6 +58,9 @@ describe("Home Page", () => {
     expect(screen.getByText("Conocer más")).toBeInTheDocument();
   });
 
+  /**
+   * Test that the services section renders with three services
+   */
   it("renders the services section with three services", () => {
     render(<Home />);
 
@@ -63,6 +78,9 @@ describe("Home Page", () => {
     expect(screen.getByTestId("credit-card-icon")).toBeInTheDocument();
   });
 
+  /**
+   * Test that the benefits section renders with four benefits
+   */
   it("renders the benefits section with four benefits", () => {
     render(<Home />);
 
@@ -76,6 +94,9 @@ describe("Home Page", () => {
     expect(screen.getByText("Historial Completo")).toBeInTheDocument();
   });
 
+  /**
+   * Test that the contact form renders with all fields
+   */
   it("renders the contact form with all fields", () => {
     render(<Home />);
 
@@ -92,6 +113,9 @@ describe("Home Page", () => {
     expect(screen.getByText("Enviar Mensaje")).toBeInTheDocument();
   });
 
+  /**
+   * Test that the footer renders with copyright information
+   */
   it("renders the footer with copyright information", () => {
     render(<Home />);
 

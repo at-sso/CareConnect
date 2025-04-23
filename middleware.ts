@@ -1,8 +1,20 @@
+/**
+ * Next.js Middleware
+ *
+ * This middleware runs on every request and handles:
+ * 1. Authentication checks for protected routes
+ * 2. Redirecting authenticated users away from public routes
+ * 3. Redirecting unauthenticated users to login
+ */
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { verifyToken } from "@/lib/jwt";
 
-// This function can be marked `async` if using `await` inside
+/**
+ * Middleware function that runs on each request
+ * @param {NextRequest} request - The incoming request
+ * @returns {NextResponse} The response or next middleware
+ */
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
@@ -49,10 +61,11 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // Continue to the requested page
   return NextResponse.next();
 }
 
-// See "Matching Paths" below to learn more
+// Configure which paths the middleware runs on
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico|images).*)"],
 };

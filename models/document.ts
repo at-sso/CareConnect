@@ -1,5 +1,16 @@
+/**
+ * Document Model
+ *
+ * This module provides:
+ * 1. Type definition for documents
+ * 2. Database table creation
+ * 3. CRUD operations for documents
+ */
 import { query } from "@/lib/db";
 
+/**
+ * Document interface defining the structure of document data
+ */
 export interface Document {
   id: number;
   user_id: number;
@@ -11,6 +22,10 @@ export interface Document {
   created_at: Date;
 }
 
+/**
+ * Create the documents table if it doesn't exist
+ * @returns {Promise<boolean>} True if successful, false otherwise
+ */
 export async function createDocumentsTable() {
   try {
     await query(`
@@ -34,6 +49,16 @@ export async function createDocumentsTable() {
   }
 }
 
+/**
+ * Save a document to the database
+ * @param {number} userId - User ID
+ * @param {string} fileName - Original file name
+ * @param {string} filePath - Path where file is stored
+ * @param {string} fileType - Type of document (e.g., "cedula", "historial")
+ * @param {number} fileSize - Size of file in bytes
+ * @param {string} mimeType - MIME type of file
+ * @returns {Promise<number | null>} The new document ID or null if failed
+ */
 export async function saveDocument(
   userId: number,
   fileName: string,
@@ -60,6 +85,11 @@ export async function saveDocument(
   }
 }
 
+/**
+ * Get all documents for a user
+ * @param {number} userId - User ID
+ * @returns {Promise<Document[]>} Array of documents
+ */
 export async function getDocumentsByUserId(
   userId: number
 ): Promise<Document[]> {
@@ -80,6 +110,11 @@ export async function getDocumentsByUserId(
   }
 }
 
+/**
+ * Get a specific document by ID
+ * @param {number} id - Document ID
+ * @returns {Promise<Document | null>} The document or null if not found
+ */
 export async function getDocumentById(id: number): Promise<Document | null> {
   try {
     const documents = await query(`SELECT * FROM documents WHERE id = ?`, [id]);
@@ -95,6 +130,11 @@ export async function getDocumentById(id: number): Promise<Document | null> {
   }
 }
 
+/**
+ * Delete a document by ID
+ * @param {number} id - Document ID
+ * @returns {Promise<boolean>} True if successful, false otherwise
+ */
 export async function deleteDocument(id: number): Promise<boolean> {
   try {
     const result = await query(`DELETE FROM documents WHERE id = ?`, [id]);

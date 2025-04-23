@@ -1,7 +1,15 @@
+/**
+ * Navigation Tests
+ *
+ * This file contains tests for the navigation component.
+ * It tests the rendering of navigation links and their attributes.
+ */
 import { render, screen } from "@testing-library/react";
 
-// Create a simple Navigation component for testing
-// This is a simplified version of what would be extracted from the page
+/**
+ * Mock Navigation component for testing
+ * This is a simplified version of what would be extracted from the page
+ */
 const Navigation = () => {
   return (
     <nav className="hidden md:flex space-x-6">
@@ -19,6 +27,9 @@ const Navigation = () => {
 };
 
 describe("Navigation", () => {
+  /**
+   * Test that all navigation links render correctly
+   */
   it("renders all navigation links", () => {
     render(<Navigation />);
 
@@ -27,6 +38,9 @@ describe("Navigation", () => {
     expect(screen.getByText("Contacto")).toBeInTheDocument();
   });
 
+  /**
+   * Test that links have correct href attributes
+   */
   it("has correct href attributes for each link", () => {
     render(<Navigation />);
 
@@ -37,6 +51,9 @@ describe("Navigation", () => {
     expect(screen.getByText("Contacto").getAttribute("href")).toBe("#contacto");
   });
 
+  /**
+   * Test that links have correct styling
+   */
   it("applies correct styling to links", () => {
     render(<Navigation />);
 

@@ -1,23 +1,32 @@
+# Define services
 services:
+  # Database service
   db:
+    # Use MariaDB latest image
     image: mariadb:latest
     container_name: care_connect_db
+    # Environment variables for database configuration
     environment:
       MYSQL_DATABASE: care_connect
       MYSQL_USER: care_connect_user
       MYSQL_PASSWORD: Admin123
       MYSQL_ROOT_PASSWORD: Adminroot123
+    # Mount volumes for data persistence and initialization
     volumes:
       - mariadb_data:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    # Expose port 3306 for database connections
     ports:
       - "3306:3306"
+    # Restart policy
     restart: unless-stopped
+    # Health check to ensure database is running
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$MYSQL_ROOT_PASSWORD"]
       interval: 10s
       timeout: 5s
       retries: 5
 
+# Define volumes for data persistence
 volumes:
   mariadb_data:

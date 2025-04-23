@@ -1,3 +1,9 @@
+/**
+ * Contact Form Tests
+ *
+ * This file contains tests for the contact form component.
+ * It tests form rendering, validation, and submission.
+ */
 "use client";
 
 import type React from "react";
@@ -5,9 +11,15 @@ import type React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-// Create a simple ContactForm component for testing
-// This is a simplified version of what would be extracted from the page
+/**
+ * Mock contact form component for testing
+ * This is a simplified version of what would be extracted from the page
+ */
 const MockContactForm = () => {
+  /**
+   * Handle form submission
+   * @param {React.FormEvent} e - Form event
+   */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Form submission logic would go here
@@ -90,6 +102,9 @@ const MockContactForm = () => {
 };
 
 describe("ContactForm", () => {
+  /**
+   * Test that all form fields render correctly
+   */
   it("renders all form fields", () => {
     render(<MockContactForm />);
 
@@ -100,6 +115,9 @@ describe("ContactForm", () => {
     expect(screen.getByText("Enviar Mensaje")).toBeInTheDocument();
   });
 
+  /**
+   * Test that required fields are validated on submission
+   */
   it("validates required fields on submission", async () => {
     render(<MockContactForm />);
 
@@ -112,6 +130,9 @@ describe("ContactForm", () => {
     expect(nameInput.validity.valid).toBe(false);
   });
 
+  /**
+   * Test that the form can be submitted when all fields are filled
+   */
   it("allows form submission when all fields are filled", async () => {
     const user = userEvent.setup();
     render(<MockContactForm />);
@@ -139,6 +160,9 @@ describe("ContactForm", () => {
     expect(messageInput.validity.valid).toBe(true);
   });
 
+  /**
+   * Test that email format is validated
+   */
   it("validates email format", async () => {
     const user = userEvent.setup();
     render(<MockContactForm />);
