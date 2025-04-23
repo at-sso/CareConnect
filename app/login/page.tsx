@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
+import { AlertCircle } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -117,11 +118,8 @@ export default function LoginPage() {
 
         {/* Formulario de login */}
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-medium mb-2"
-              htmlFor="cedula"
-            >
+          <div className="form-group">
+            <label className="form-label" htmlFor="cedula">
               Cédula
             </label>
             <input
@@ -130,20 +128,18 @@ export default function LoginPage() {
               value={formData.cedula}
               onChange={handleChange}
               placeholder="Ingrese su cédula"
-              className={`w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                errors.cedula ? "border-red-500" : ""
-              }`}
+              className={`input-field ${errors.cedula ? "border-red-500" : ""}`}
             />
             {errors.cedula && (
-              <p className="text-red-500 text-xs mt-1">{errors.cedula}</p>
+              <div className="flex items-center mt-1 text-red-500">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                <span className="text-xs">{errors.cedula}</span>
+              </div>
             )}
           </div>
 
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-medium mb-2"
-              htmlFor="password"
-            >
+          <div className="form-group">
+            <label className="form-label" htmlFor="password">
               Contraseña
             </label>
             <input
@@ -152,12 +148,15 @@ export default function LoginPage() {
               value={formData.password}
               onChange={handleChange}
               placeholder="••••••••"
-              className={`w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+              className={`input-field ${
                 errors.password ? "border-red-500" : ""
               }`}
             />
             {errors.password && (
-              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+              <div className="flex items-center mt-1 text-red-500">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                <span className="text-xs">{errors.password}</span>
+              </div>
             )}
           </div>
 
@@ -165,7 +164,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-xl transition disabled:opacity-70"
+              className="btn-primary w-full"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">

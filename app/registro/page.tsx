@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { toast } from "@/components/ui/use-toast";
+import { AlertCircle } from "lucide-react";
 
 export default function RegistroPage() {
   const router = useRouter();
@@ -101,6 +102,8 @@ export default function RegistroPage() {
 
     if (!validateForm()) return;
 
+    setIsLoading(true);
+
     try {
       // Store form data in session storage to use in next step
       sessionStorage.setItem("registroData", JSON.stringify(formData));
@@ -114,6 +117,8 @@ export default function RegistroPage() {
         description: "Ocurrió un error al procesar el formulario",
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -132,7 +137,7 @@ export default function RegistroPage() {
             />
             <h1 className="text-2xl font-bold text-blue-900">Registro</h1>
           </div>
-          <h2 className="text-xl font-semibold text-gray-700">
+          <h2 className="text-xl font-semibold text-black">
             Tu salud es nuestra prioridad
           </h2>
         </div>
@@ -141,144 +146,146 @@ export default function RegistroPage() {
         <form id="registroPaso1" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="col-span-1 md:col-span-1">
-              <label className="block text-sm font-medium text-gray-700">
-                Nombres
-              </label>
+              <label className="form-label">Nombres</label>
               <input
                 name="nombres"
                 type="text"
                 value={formData.nombres}
                 onChange={handleChange}
-                className={`w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`input-field ${
                   errors.nombres ? "border-red-500" : ""
                 }`}
                 placeholder="Juan Carlos"
               />
               {errors.nombres && (
-                <p className="text-red-500 text-xs mt-1">{errors.nombres}</p>
+                <div className="flex items-center mt-1 text-red-500">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  <span className="text-xs">{errors.nombres}</span>
+                </div>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Apellidos
-              </label>
+              <label className="form-label">Apellidos</label>
               <input
                 name="apellidos"
                 type="text"
                 value={formData.apellidos}
                 onChange={handleChange}
-                className={`w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`input-field ${
                   errors.apellidos ? "border-red-500" : ""
                 }`}
                 placeholder="Pérez"
               />
               {errors.apellidos && (
-                <p className="text-red-500 text-xs mt-1">{errors.apellidos}</p>
+                <div className="flex items-center mt-1 text-red-500">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  <span className="text-xs">{errors.apellidos}</span>
+                </div>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Fecha de Nacimiento
-              </label>
+              <label className="form-label">Fecha de Nacimiento</label>
               <input
                 name="fecha"
                 type="date"
                 value={formData.fecha}
                 onChange={handleChange}
-                className={`w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`input-field ${
                   errors.fecha ? "border-red-500" : ""
                 }`}
               />
               {errors.fecha && (
-                <p className="text-red-500 text-xs mt-1">{errors.fecha}</p>
+                <div className="flex items-center mt-1 text-red-500">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  <span className="text-xs">{errors.fecha}</span>
+                </div>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Cédula / ID
-              </label>
+              <label className="form-label">Cédula / ID</label>
               <input
                 name="cedula"
                 type="text"
                 value={formData.cedula}
                 onChange={handleChange}
-                className={`w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`input-field ${
                   errors.cedula ? "border-red-500" : ""
                 }`}
                 placeholder="123456789"
               />
               {errors.cedula && (
-                <p className="text-red-500 text-xs mt-1">{errors.cedula}</p>
+                <div className="flex items-center mt-1 text-red-500">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  <span className="text-xs">{errors.cedula}</span>
+                </div>
               )}
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-4 mb-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Email
-              </label>
+              <label className="form-label">Email</label>
               <input
                 name="email"
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`input-field ${
                   errors.email ? "border-red-500" : ""
                 }`}
                 placeholder="correo@ejemplo.com"
               />
               {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                <div className="flex items-center mt-1 text-red-500">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  <span className="text-xs">{errors.email}</span>
+                </div>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Contraseña
-              </label>
+              <label className="form-label">Contraseña</label>
               <input
                 name="password"
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
-                className={`w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`input-field ${
                   errors.password ? "border-red-500" : ""
                 }`}
                 placeholder="••••••••"
               />
               {errors.password && (
-                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+                <div className="flex items-center mt-1 text-red-500">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  <span className="text-xs">{errors.password}</span>
+                </div>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Confirmar Contraseña
-              </label>
+              <label className="form-label">Confirmar Contraseña</label>
               <input
                 name="confirmPassword"
                 type="password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className={`w-full mt-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                className={`input-field ${
                   errors.confirmPassword ? "border-red-500" : ""
                 }`}
                 placeholder="••••••••"
               />
               {errors.confirmPassword && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.confirmPassword}
-                </p>
+                <div className="flex items-center mt-1 text-red-500">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  <span className="text-xs">{errors.confirmPassword}</span>
+                </div>
               )}
             </div>
           </div>
 
           {/* Botón */}
           <div className="text-right">
-            <button
-              type="submit"
-              className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-xl transition"
-            >
-              Siguiente
+            <button type="submit" className="btn-primary">
+              {isLoading ? "Procesando..." : "Siguiente"}
             </button>
           </div>
         </form>

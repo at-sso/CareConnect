@@ -275,9 +275,7 @@ export default function DashboardPage() {
             >
               <Bell className="h-6 w-6 text-gray-600" />
               {unreadCount > 0 && (
-                <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {unreadCount}
-                </span>
+                <span className="notification-badge">{unreadCount}</span>
               )}
             </button>
 
@@ -351,10 +349,7 @@ export default function DashboardPage() {
           <span id="nombreCliente" className="font-semibold">
             {cliente.nombre || "Cargando..."}
           </span>
-          <button
-            onClick={cerrarSesion}
-            className="bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200 transition"
-          >
+          <button onClick={cerrarSesion} className="btn-danger">
             Cerrar sesión
           </button>
         </div>
@@ -382,9 +377,9 @@ export default function DashboardPage() {
         </Link>
       </nav>
 
-      {/* Información del Cliente */}
+      {/** Información del Cliente */}
       <main className="p-6 space-y-8 flex-grow">
-        <section className="bg-white rounded-2xl shadow-md p-6">
+        <section className="card p-6">
           <h2 className="text-xl font-semibold text-blue-600 mb-4">
             Información del Cliente
           </h2>
@@ -413,47 +408,47 @@ export default function DashboardPage() {
         </section>
 
         {/* Historial de Citas */}
-        <section className="bg-white rounded-2xl shadow-md p-6">
+        <section className="card p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-blue-600">Mis Citas</h2>
             <Link
               href="/dashboard/solicitar-cita"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm flex items-center"
+              className="btn-primary flex items-center"
             >
               <Calendar className="w-4 h-4 mr-2" />
               Nueva Cita
             </Link>
           </div>
-          <div className="overflow-x-auto">
+          <div className="table-container">
             <table className="w-full text-sm text-left border-collapse">
-              <thead className="bg-blue-100 text-blue-700">
+              <thead className="table-header">
                 <tr>
-                  <th className="p-3"># Seguimiento</th>
-                  <th className="p-3">Fecha</th>
-                  <th className="p-3">Servicio</th>
-                  <th className="p-3">Horario</th>
-                  <th className="p-3">Doctor</th>
-                  <th className="p-3">Estado</th>
-                  <th className="p-3">Acción</th>
+                  <th className="table-cell"># Seguimiento</th>
+                  <th className="table-cell">Fecha</th>
+                  <th className="table-cell">Servicio</th>
+                  <th className="table-cell">Horario</th>
+                  <th className="table-cell">Doctor</th>
+                  <th className="table-cell">Estado</th>
+                  <th className="table-cell">Acción</th>
                 </tr>
               </thead>
               <tbody className="text-gray-700">
                 {citas.length > 0 ? (
                   citas.map((cita, index) => (
-                    <tr key={cita.id} className="border-t">
-                      <td className="p-3">{cita.seguimiento}</td>
-                      <td className="p-3">{cita.fecha}</td>
-                      <td className="p-3">{cita.servicio}</td>
-                      <td className="p-3">{cita.horario}</td>
-                      <td className="p-3">{cita.doctor}</td>
-                      <td className="p-3">
+                    <tr key={cita.id} className="table-row">
+                      <td className="table-cell">{cita.seguimiento}</td>
+                      <td className="table-cell">{cita.fecha}</td>
+                      <td className="table-cell">{cita.servicio}</td>
+                      <td className="table-cell">{cita.horario}</td>
+                      <td className="table-cell">{cita.doctor}</td>
+                      <td className="table-cell">
                         <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${
+                          className={`status-badge ${
                             cita.estado === "Confirmada"
-                              ? "bg-green-100 text-green-800"
+                              ? "status-badge-success"
                               : cita.estado === "Pendiente"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-red-100 text-red-800"
+                              ? "status-badge-warning"
+                              : "status-badge-danger"
                           }`}
                         >
                           {cita.estado === "Confirmada" && (
@@ -465,18 +460,18 @@ export default function DashboardPage() {
                           {cita.estado}
                         </span>
                       </td>
-                      <td className="p-3 space-x-2">
+                      <td className="table-cell space-x-2">
                         {cita.estado !== "Cancelada" && (
                           <>
                             <button
                               onClick={() => rescheduleAppointment(cita.id)}
-                              className="text-sm bg-yellow-100 text-yellow-800 px-3 py-1 rounded hover:bg-yellow-200 transition"
+                              className="btn-warning text-sm px-3 py-1"
                             >
                               Reagendar
                             </button>
                             <button
                               onClick={() => cancelAppointment(cita.id)}
-                              className="text-sm bg-red-100 text-red-600 px-3 py-1 rounded hover:bg-red-200 transition"
+                              className="btn-danger text-sm px-3 py-1"
                             >
                               Cancelar
                             </button>
@@ -487,7 +482,10 @@ export default function DashboardPage() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={7} className="p-3 text-center text-gray-500">
+                    <td
+                      colSpan={7}
+                      className="table-cell text-center text-gray-500"
+                    >
                       No hay citas programadas
                     </td>
                   </tr>
@@ -499,7 +497,7 @@ export default function DashboardPage() {
 
         {/* Quick Actions */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition">
+          <div className="card p-6 hover:shadow-lg transition">
             <div className="flex items-center mb-4">
               <div className="bg-blue-100 p-3 rounded-full">
                 <Calendar className="h-6 w-6 text-blue-600" />
@@ -530,7 +528,7 @@ export default function DashboardPage() {
             </Link>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition">
+          <div className="card p-6 hover:shadow-lg transition">
             <div className="flex items-center mb-4">
               <div className="bg-green-100 p-3 rounded-full">
                 <FileText className="h-6 w-6 text-green-600" />
@@ -561,7 +559,7 @@ export default function DashboardPage() {
             </Link>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition">
+          <div className="card p-6 hover:shadow-lg transition">
             <div className="flex items-center mb-4">
               <div className="bg-purple-100 p-3 rounded-full">
                 <User className="h-6 w-6 text-purple-600" />

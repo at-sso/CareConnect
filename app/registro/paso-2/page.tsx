@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 import { AlertCircle, CheckCircle2, Upload } from "lucide-react";
@@ -38,6 +38,11 @@ export default function RegistroPaso2Page() {
     recetas: 0,
     historial: 0,
   });
+
+  // Create refs for file inputs
+  const cedulaInputRef = useRef<HTMLInputElement>(null);
+  const recetasInputRef = useRef<HTMLInputElement>(null);
+  const historialInputRef = useRef<HTMLInputElement>(null);
 
   // Check if registration data exists
   useEffect(() => {
@@ -265,6 +270,25 @@ export default function RegistroPaso2Page() {
     return { success: true };
   };
 
+  // Handlers for clicking the upload areas
+  const handleCedulaClick = () => {
+    if (cedulaInputRef.current) {
+      cedulaInputRef.current.click();
+    }
+  };
+
+  const handleRecetasClick = () => {
+    if (recetasInputRef.current) {
+      recetasInputRef.current.click();
+    }
+  };
+
+  const handleHistorialClick = () => {
+    if (historialInputRef.current) {
+      historialInputRef.current.click();
+    }
+  };
+
   return (
     <div className="bg-blue-50 min-h-screen flex items-center justify-center font-sans p-4">
       <div className="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-2xl">
@@ -288,13 +312,14 @@ export default function RegistroPaso2Page() {
                 Foto de Cédula / ID <span className="text-red-500">*</span>
               </label>
               <div
-                className={`border-2 border-dashed rounded-xl p-4 transition-colors ${
+                className={`border-2 border-dashed rounded-xl p-4 transition-colors relative ${
                   fileErrors.cedula
                     ? "border-red-400 bg-red-50"
                     : files.cedula
                     ? "border-green-400 bg-green-50"
                     : "border-gray-300 hover:border-blue-400 bg-gray-50"
                 }`}
+                onClick={handleCedulaClick}
               >
                 <div className="flex flex-col items-center justify-center py-3">
                   {filePreview.cedula ? (
@@ -364,15 +389,15 @@ export default function RegistroPaso2Page() {
                       <span className="text-sm">Archivo listo</span>
                     </div>
                   )}
-
-                  <input
-                    type="file"
-                    name="cedula"
-                    accept="image/*,.pdf"
-                    onChange={handleFileChange}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  />
                 </div>
+                <input
+                  type="file"
+                  name="cedula"
+                  ref={cedulaInputRef}
+                  accept="image/*,.pdf"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
               </div>
               {fileErrors.cedula && (
                 <div className="flex items-center mt-1 text-red-500">
@@ -388,11 +413,12 @@ export default function RegistroPaso2Page() {
                 Recetas Médicas (si aplica)
               </label>
               <div
-                className={`border-2 border-dashed rounded-xl p-4 transition-colors ${
+                className={`border-2 border-dashed rounded-xl p-4 transition-colors relative ${
                   files.recetas
                     ? "border-green-400 bg-green-50"
                     : "border-gray-300 hover:border-blue-400 bg-gray-50"
                 }`}
+                onClick={handleRecetasClick}
               >
                 <div className="flex flex-col items-center justify-center py-3">
                   {filePreview.recetas ? (
@@ -465,15 +491,15 @@ export default function RegistroPaso2Page() {
                       <span className="text-sm">Archivo listo</span>
                     </div>
                   )}
-
-                  <input
-                    type="file"
-                    name="recetas"
-                    accept="image/*,.pdf"
-                    onChange={handleFileChange}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  />
                 </div>
+                <input
+                  type="file"
+                  name="recetas"
+                  ref={recetasInputRef}
+                  accept="image/*,.pdf"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
               </div>
             </div>
 
@@ -483,13 +509,14 @@ export default function RegistroPaso2Page() {
                 Historial Médico <span className="text-red-500">*</span>
               </label>
               <div
-                className={`border-2 border-dashed rounded-xl p-4 transition-colors ${
+                className={`border-2 border-dashed rounded-xl p-4 transition-colors relative ${
                   fileErrors.historial
                     ? "border-red-400 bg-red-50"
                     : files.historial
                     ? "border-green-400 bg-green-50"
                     : "border-gray-300 hover:border-blue-400 bg-gray-50"
                 }`}
+                onClick={handleHistorialClick}
               >
                 <div className="flex flex-col items-center justify-center py-3">
                   {filePreview.historial ? (
@@ -563,15 +590,15 @@ export default function RegistroPaso2Page() {
                       <span className="text-sm">Archivo listo</span>
                     </div>
                   )}
-
-                  <input
-                    type="file"
-                    name="historial"
-                    accept="image/*,.pdf"
-                    onChange={handleFileChange}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  />
                 </div>
+                <input
+                  type="file"
+                  name="historial"
+                  ref={historialInputRef}
+                  accept="image/*,.pdf"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
               </div>
               {fileErrors.historial && (
                 <div className="flex items-center mt-1 text-red-500">
@@ -584,11 +611,7 @@ export default function RegistroPaso2Page() {
 
           {/* Botón Finalizar */}
           <div className="text-right mt-10">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-xl transition disabled:opacity-70"
-            >
+            <button type="submit" disabled={isLoading} className="btn-primary">
               {isLoading ? (
                 <div className="flex items-center justify-center">
                   <svg
