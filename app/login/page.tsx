@@ -4,60 +4,21 @@ import type React from "react";
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { toast } from "@/components/ui/use-toast";
-import { AlertCircle } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
-export default function LoginPage() {
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    cedula: "",
-    password: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState({
-    cedula: "",
-    password: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
-
-    // Clear error when user types
-    if (errors[id as keyof typeof errors]) {
-      setErrors((prev) => ({ ...prev, [id]: "" }));
-    }
-  };
-
-  const validateForm = (): boolean => {
-    let isValid = true;
-    const newErrors = { ...errors };
-
-    if (!formData.cedula.trim()) {
-      newErrors.cedula = "La cédula es requerida";
-      isValid = false;
-    }
-
-    if (!formData.password) {
-      newErrors.password = "La contraseña es requerida";
-      isValid = false;
-    } else if (formData.password.length < 6) {
-      newErrors.password = "La contraseña debe tener al menos 6 caracteres";
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!validateForm()) return;
-
-    setIsLoading(true);
+    setLoading(true);
+    setError("");
 
     try {
       const response = await fetch("/api/auth/login", {
@@ -65,147 +26,155 @@ export default function LoginPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || "Error al iniciar sesión");
+      if (response.ok) {
+        toast({
+          title: "Inicio de sesión exitoso",
+          description: "Redirigiendo al dashboard...",
+        });
+        router.push("/dashboard");
+      } else {
+        setError(data.message || "Error al iniciar sesión");
+        toast({
+          title: "Error",
+          description: data.message || "Error al iniciar sesión",
+          variant: "destructive",
+        });
       }
-
-      toast({
-        title: "Inicio de sesión exitoso",
-        description: "Bienvenido de nuevo",
-      });
-
-      router.push("/dashboard");
     } catch (error) {
-      console.error("Login error:", error);
+      setError("Error al conectar con el servidor");
       toast({
         title: "Error",
-        description:
-          error instanceof Error ? error.message : "Error al iniciar sesión",
+        description: "Error al conectar con el servidor",
         variant: "destructive",
       });
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div className="bg-blue-50 min-h-screen flex items-center justify-center font-sans p-4">
-      <div className="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-md">
-        {/* Logo del proyecto */}
-        <div className="flex items-center justify-center mb-6">
-          <Image
-            src="/images/logo.png"
-            alt="Logo del proyecto"
-            width={64}
-            height={64}
-            className="mr-2"
-          />
-          <h1 className="text-3xl font-bold text-blue-900">CareConnect</h1>
-        </div>
-
-        {/* Mensaje de bienvenida */}
-        <div className="mb-6 text-center">
-          <h2 className="text-xl font-semibold text-gray-800">
-            ¡Bienvenido de nuevo!
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-12">
+      <div className="max-w-md w-full space-y-8">
+        <div className="text-center">
+          <h1 className="text-3xl font-extrabold text-blue-400">CareConnect</h1>
+          <h2 className="mt-2 text-xl font-bold text-gray-100">
+            Iniciar Sesión
           </h2>
-          <p className="text-sm text-gray-600">Inicia sesión para continuar.</p>
+          <p className="mt-2 text-gray-400">
+            Ingrese sus credenciales para acceder a su cuenta
+          </p>
         </div>
 
-        {/* Formulario de login */}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label" htmlFor="cedula">
-              Cédula
-            </label>
-            <input
-              type="text"
-              id="cedula"
-              value={formData.cedula}
-              onChange={handleChange}
-              placeholder="Ingrese su cédula"
-              className={`input-field ${errors.cedula ? "border-red-500" : ""}`}
-            />
-            {errors.cedula && (
-              <div className="flex items-center mt-1 text-red-500">
-                <AlertCircle className="w-4 h-4 mr-1" />
-                <span className="text-xs">{errors.cedula}</span>
+        <div className="card">
+          {error && (
+            <div className="bg-red-900/30 text-red-400 p-3 rounded-md mb-4">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="p-6 space-y-6">
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                Correo Electrónico
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input-field"
+                placeholder="correo@ejemplo.com"
+              />
+            </div>
+
+            <div className="form-group">
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="form-label">
+                  Contraseña
+                </label>
+                <Link
+                  href="/reset-password"
+                  className="text-sm text-blue-400 hover:text-blue-300"
+                >
+                  ¿Olvidó su contraseña?
+                </Link>
               </div>
-            )}
-          </div>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input-field"
+                placeholder="••••••••"
+              />
+            </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="password">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
-              className={`input-field ${
-                errors.password ? "border-red-500" : ""
-              }`}
-            />
-            {errors.password && (
-              <div className="flex items-center mt-1 text-red-500">
-                <AlertCircle className="w-4 h-4 mr-1" />
-                <span className="text-xs">{errors.password}</span>
-              </div>
-            )}
-          </div>
+            <div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn-primary w-full flex justify-center items-center"
+              >
+                {loading ? (
+                  <>
+                    <svg
+                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Iniciando sesión...
+                  </>
+                ) : (
+                  "Iniciar Sesión"
+                )}
+              </button>
+            </div>
+          </form>
 
-          <div className="mb-6">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="btn-primary w-full"
-            >
-              {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Iniciando sesión...
-                </div>
-              ) : (
-                "Iniciar sesión"
-              )}
-            </button>
+          <div className="px-6 pb-6 text-center">
+            <p className="text-sm text-gray-400">
+              ¿No tiene una cuenta?{" "}
+              <Link
+                href="/registro"
+                className="text-blue-400 hover:text-blue-300 font-medium"
+              >
+                Regístrese aquí
+              </Link>
+            </p>
           </div>
+        </div>
 
-          <div className="text-center text-sm text-gray-600">
-            ¿No tienes cuenta?{" "}
-            <Link
-              href="/registro"
-              className="text-purple-600 hover:underline font-medium"
-            >
-              Regístrate
-            </Link>
-          </div>
-        </form>
+        <div className="text-center text-sm text-gray-400">
+          <Link href="/" className="text-blue-400 hover:text-blue-300">
+            &larr; Volver a la página principal
+          </Link>
+        </div>
       </div>
     </div>
   );
