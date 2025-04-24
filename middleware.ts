@@ -25,7 +25,9 @@ export function middleware(request: NextRequest) {
     path === "/registro" ||
     path === "/registro/paso-2" ||
     path === "/servicios" ||
-    path.startsWith("/api/auth");
+    path.startsWith("/api/auth") ||
+    path.startsWith("/admin") || // Allow admin routes without authentication
+    path.startsWith("/api/admin"); // Allow admin API routes without authentication
 
   // Define protected paths that require authentication
   const isProtectedPath =
