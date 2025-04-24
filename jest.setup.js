@@ -7,4 +7,4 @@
 
 // Import jest-dom to extend Jest with DOM testing utilities
 // This adds custom matchers like toBeInTheDocument, toHaveClass, etc.
-import "@testing-library/jest-dom";
+import "jest-environment-jsdom";

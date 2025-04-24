@@ -6,7 +6,7 @@
  */
 
 // Import the Next.js Jest configuration creator
-import nextJest from "next/jest";
+import nextJest from "next/jest.js";
 
 // Create a Jest configuration function with the Next.js app directory
 const createJestConfig = nextJest({
