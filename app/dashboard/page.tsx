@@ -251,7 +251,7 @@ export default function DashboardPage() {
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          <p className="text-gray-600">Cargando información del portal...</p>
+          <p className="text-white">Cargando información del portal...</p>
         </div>
       </div>
     );
@@ -260,7 +260,7 @@ export default function DashboardPage() {
   return (
     <div className="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
       {/* Encabezado */}
-      <header className="bg-white shadow-md p-6 flex justify-between items-center">
+      <header className="bg-blue-50 shadow-md p-6 flex justify-between items-center">
         <div className="flex items-center gap-4">
           <Image src="/images/logo.png" alt="Logo" width={48} height={48} />
           <h1 className="text-2xl font-bold text-blue-600">
@@ -273,7 +273,7 @@ export default function DashboardPage() {
               onClick={() => setShowNotifications(!showNotifications)}
               className="relative p-2 rounded-full hover:bg-gray-100"
             >
-              <Bell className="h-6 w-6 text-gray-600" />
+              <Bell className="h-6 w-6 text-white" />
               {unreadCount > 0 && (
                 <span className="notification-badge">{unreadCount}</span>
               )}
@@ -281,7 +281,7 @@ export default function DashboardPage() {
 
             {/* Notifications dropdown */}
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-10 max-h-96 overflow-y-auto">
+              <div className="absolute right-0 mt-2 w-80 bg-blue-50 rounded-lg shadow-xl z-10 max-h-96 overflow-y-auto">
                 <div className="p-3 border-b flex justify-between items-center">
                   <h3 className="font-semibold">Notificaciones</h3>
                   {unreadCount > 0 && (
@@ -323,7 +323,7 @@ export default function DashboardPage() {
                             <p className="font-medium text-sm">
                               {notification.title}
                             </p>
-                            <p className="text-xs text-gray-600">
+                            <p className="text-xs text-white">
                               {notification.message}
                             </p>
                             <p className="text-xs text-gray-400 mt-1">
@@ -378,12 +378,12 @@ export default function DashboardPage() {
       </nav>
 
       {/** Información del Cliente */}
-      <main className="p-6 space-y-8 flex-grow">
+      <main className="bg-blue-50 p-6 space-y-8 flex-grow">
         <section className="card p-6">
           <h2 className="text-xl font-semibold text-blue-600 mb-4">
             Información del Cliente
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-white">
             <p>
               <strong>Nombre:</strong>{" "}
               <span>{cliente.nombre || "Cargando..."}</span>
@@ -432,7 +432,7 @@ export default function DashboardPage() {
                   <th className="table-cell">Acción</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-700">
+              <tbody className="text-white">
                 {citas.length > 0 ? (
                   citas.map((cita, index) => (
                     <tr key={cita.id} className="table-row">
@@ -502,9 +502,9 @@ export default function DashboardPage() {
               <div className="bg-blue-100 p-3 rounded-full">
                 <Calendar className="h-6 w-6 text-blue-600" />
               </div>
-              <h3 className="ml-3 text-lg font-semibold">Agendar Cita</h3>
+              <h3 className="text-white text-lg font-semibold">Agendar Cita</h3>
             </div>
-            <p className="text-gray-600 mb-4">
+            <p className="text-white mb-4">
               Solicite una nueva cita médica con nuestros especialistas
             </p>
             <Link
@@ -533,9 +533,9 @@ export default function DashboardPage() {
               <div className="bg-green-100 p-3 rounded-full">
                 <FileText className="h-6 w-6 text-green-600" />
               </div>
-              <h3 className="ml-3 text-lg font-semibold">Mis Documentos</h3>
+              <h3 className="text-white text-lg font-semibold">Mis Documentos</h3>
             </div>
-            <p className="text-gray-600 mb-4">
+            <p className="text-white mb-4">
               Acceda a sus documentos médicos y recetas
             </p>
             <Link
@@ -564,9 +564,9 @@ export default function DashboardPage() {
               <div className="bg-purple-100 p-3 rounded-full">
                 <User className="h-6 w-6 text-purple-600" />
               </div>
-              <h3 className="ml-3 text-lg font-semibold">Mi Perfil</h3>
+              <h3 className="text-white text-lg font-semibold">Mi Perfil</h3>
             </div>
-            <p className="text-gray-600 mb-4">
+            <p className="text-white mb-4">
               Actualice su información personal y preferencias
             </p>
             <Link
